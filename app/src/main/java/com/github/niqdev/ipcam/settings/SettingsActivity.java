@@ -21,13 +21,19 @@ import com.github.niqdev.ipcam.R;
 import java.util.List;
 
 public class SettingsActivity extends AppCompatPreferenceActivity {
-
-    public static final String PREF_IPCAM_URL = "com.github.niqdev.ipcam.settings.SettingsActivity.IPCAM_URL";
-    public static final String PREF_FLIP_HORIZONTAL = "com.github.niqdev.ipcam.settings.SettingsActivity.FLIP_HORIZONTAL";
-    public static final String PREF_FLIP_VERTICAL= "com.github.niqdev.ipcam.settings.SettingsActivity.FLIP_VERTICAL";
-    public static final String PREF_ROTATE_DEGREES = "com.github.niqdev.ipcam.settings.SettingsActivity.ROTATE_DEGREES";
-    public static final String PREF_AUTH_USERNAME = "com.github.niqdev.ipcam.settings.SettingsActivity.PREF_AUTH_USERNAME";
-    public static final String PREF_AUTH_PASSWORD = "com.github.niqdev.ipcam.settings.SettingsActivity.PREF_AUTH_PASSWORD";
+    //rtsp://root:room205@10.147.224.73/axis-media/media.amp
+    public static String PREF_IPCAM_URL = "rtsp://10.147.224.73/axis-media/media.mjpg";
+    public static  String PREF_FLIP_HORIZONTAL = "false";
+    public static  String PREF_FLIP_VERTICAL= "false";
+    public static  String PREF_ROTATE_DEGREES = "0";
+    public static  String PREF_AUTH_USERNAME = "root";
+    public static  String PREF_AUTH_PASSWORD = "room205";
+//    public static final String PREF_IPCAM_URL = "com.github.niqdev.ipcam.settings.SettingsActivity.IPCAM_URL";
+//    public static final String PREF_FLIP_HORIZONTAL = "com.github.niqdev.ipcam.settings.SettingsActivity.FLIP_HORIZONTAL";
+//    public static final String PREF_FLIP_VERTICAL= "com.github.niqdev.ipcam.settings.SettingsActivity.FLIP_VERTICAL";
+//    public static final String PREF_ROTATE_DEGREES = "com.github.niqdev.ipcam.settings.SettingsActivity.ROTATE_DEGREES";
+//    public static final String PREF_AUTH_USERNAME = "com.github.niqdev.ipcam.settings.SettingsActivity.PREF_AUTH_USERNAME";
+//    public static final String PREF_AUTH_PASSWORD = "com.github.niqdev.ipcam.settings.SettingsActivity.PREF_AUTH_PASSWORD";
 
     private static final boolean ALWAYS_SIMPLE_PREFS = false;
 

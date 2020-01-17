@@ -31,7 +31,7 @@ public class IpCamTwoActivity extends AppCompatActivity {
 
     private void loadIpCam1() {
         Mjpeg.newInstance()
-            .open("http://50.244.186.65:8081/mjpg/video.mjpg", TIMEOUT)
+            .open("rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov", TIMEOUT)
             .subscribe(
                 inputStream -> {
                     mjpegView1.setSource(inputStream);
@@ -46,7 +46,7 @@ public class IpCamTwoActivity extends AppCompatActivity {
 
     private void loadIpCam2() {
         Mjpeg.newInstance()
-            .open("http://iris.not.iac.es/axis-cgi/mjpg/video.cgi?resolution=320x240", TIMEOUT)
+            .open("rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov", TIMEOUT)
             .subscribe(
                 inputStream -> {
                     mjpegView2.setSource(inputStream);

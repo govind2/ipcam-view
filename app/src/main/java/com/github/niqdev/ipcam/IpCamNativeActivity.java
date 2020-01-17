@@ -28,7 +28,7 @@ public class IpCamNativeActivity extends AppCompatActivity {
     private void loadIpcam() {
         Mjpeg.newInstance(Mjpeg.Type.NATIVE)
             //.credential("", "")
-            .open("http://wmccpinetop.axiscam.net/mjpg/video.mjpg")
+            .open("rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov")
             .subscribe(inputStream -> {
                 mjpegView.setSource(inputStream);
                 // TODO if (inputStream != null) inputStream.setSkip(1)

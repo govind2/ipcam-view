@@ -5,9 +5,12 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.github.niqdev.ipcam.settings.SettingsActivity;
 import com.github.niqdev.mjpeg.DisplayMode;
 import com.github.niqdev.mjpeg.Mjpeg;
 import com.github.niqdev.mjpeg.MjpegView;
@@ -24,7 +27,7 @@ import static com.github.niqdev.ipcam.settings.SettingsActivity.PREF_ROTATE_DEGR
 
 public class IpCamDefaultActivity extends AppCompatActivity {
 
-    private static final int TIMEOUT = 5;
+    private static final int TIMEOUT = 10;
 
     @BindView(R.id.mjpegViewDefault)
     MjpegView mjpegView;
@@ -32,8 +35,24 @@ public class IpCamDefaultActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ipcam_default);
-        ButterKnife.bind(this);
+        try {
+            setContentView(R.layout.activity_ipcam_default);
+            ButterKnife.bind(this);
+            String videoUrl = "";
+
+            if (getIntent().hasExtra("videoUrl")) {
+                videoUrl = getIntent().getStringExtra("videoUrl");
+            }
+            if (TextUtils.isEmpty(videoUrl)) {
+                videoUrl = "rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov";
+            }
+            PREF_IPCAM_URL = videoUrl;
+            Log.d("IPCAM", "playing VideoURL = " + PREF_IPCAM_URL + ", userId = " + PREF_AUTH_USERNAME + ", password = " + PREF_AUTH_PASSWORD);
+            loadIpCam();
+
+        } catch (Exception e) {
+            Log.e("IPCAM", "playing VideoURL = " + PREF_IPCAM_URL + ", userId = " + PREF_AUTH_USERNAME + ", password = " + PREF_AUTH_PASSWORD + " error = "+ e);
+        }
     }
 
     private SharedPreferences getSharedPreferences() {
@@ -58,28 +77,33 @@ public class IpCamDefaultActivity extends AppCompatActivity {
     }
 
     private void loadIpCam() {
-        Mjpeg.newInstance()
-            .credential(getPreference(PREF_AUTH_USERNAME), getPreference(PREF_AUTH_PASSWORD))
-            .open(getPreference(PREF_IPCAM_URL), TIMEOUT)
-            .subscribe(
-                inputStream -> {
-                    mjpegView.setSource(inputStream);
-                    mjpegView.setDisplayMode(calculateDisplayMode());
-                    mjpegView.flipHorizontal(getBooleanPreference(PREF_FLIP_HORIZONTAL));
-                    mjpegView.flipVertical(getBooleanPreference(PREF_FLIP_VERTICAL));
-                    mjpegView.setRotate(Float.parseFloat(getPreference(PREF_ROTATE_DEGREES)));
-                    mjpegView.showFps(true);
-                },
-                throwable -> {
-                    Log.e(getClass().getSimpleName(), "mjpeg error", throwable);
-                    Toast.makeText(this, "Error", Toast.LENGTH_LONG).show();
-                });
+        try {
+            Log.d("IPCAM", " in loadIpCam , playing VideoURL = " + PREF_IPCAM_URL + ", userId = " + PREF_AUTH_USERNAME + ", password = " + PREF_AUTH_PASSWORD);
+            Mjpeg.newInstance()
+                    .credential(SettingsActivity.PREF_AUTH_USERNAME, SettingsActivity.PREF_AUTH_PASSWORD)
+                    .open(SettingsActivity.PREF_IPCAM_URL, TIMEOUT)
+                    .subscribe(
+                            inputStream -> {
+                                mjpegView.setSource(inputStream);
+                                mjpegView.setDisplayMode(calculateDisplayMode());
+//                    mjpegView.flipHorizontal(getBooleanPreference(PREF_FLIP_HORIZONTAL));
+//                    mjpegView.flipVertical(getBooleanPreference(PREF_FLIP_VERTICAL));
+//                    mjpegView.setRotate(Float.parseFloat(getPreference(PREF_ROTATE_DEGREES)));
+                                mjpegView.showFps(true);
+                            },
+                            throwable -> {
+                                Log.e(getClass().getSimpleName(), "mjpeg error", throwable);
+                                Toast.makeText(this, "Error", Toast.LENGTH_LONG).show();
+                            });
+        } catch ( Exception e) {
+            Log.e("IPCAM", "exception in loadIpCam = " + PREF_IPCAM_URL + ", userId = " + PREF_AUTH_USERNAME + ", password = " + PREF_AUTH_PASSWORD + " error = "+ e);
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        loadIpCam();
+        //loadIpCam();
     }
 
     @Override

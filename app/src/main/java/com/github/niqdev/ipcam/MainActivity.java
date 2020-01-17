@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.github.niqdev.ipcam.settings.SettingsActivity;
@@ -31,13 +32,13 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         // load default values first time
-        PreferenceManager.setDefaultValues(this, R.xml.pref_general, false);
-        verifySettings();
+        //PreferenceManager.setDefaultValues(this, R.xml.pref_general, false);
+        //verifySettings();
     }
 
     private void verifySettings() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        if (TextUtils.isEmpty(prefs.getString(SettingsActivity.PREF_IPCAM_URL, ""))) {
+        if (TextUtils.isEmpty(prefs.getString(SettingsActivity.PREF_IPCAM_URL, "rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov"))) {
             buttonDefault.setEnabled(false);
         }
 
@@ -77,6 +78,18 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Settings not available", Toast.LENGTH_LONG).show();
         }
+    }
+
+    @BindView(R.id.editText)
+    EditText mEditText;
+
+    @OnClick(R.id.buttonPlayUrl)
+    public void onClickPlayUrl() {
+        String url = "";
+        url =  mEditText.getText().toString();
+        Intent playURLIntent = new Intent(this, IpCamDefaultActivity.class);
+        playURLIntent.putExtra("videoUrl", url);
+        startActivity(playURLIntent);
     }
 
 }

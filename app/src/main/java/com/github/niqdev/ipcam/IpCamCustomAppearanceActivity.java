@@ -43,7 +43,7 @@ public class IpCamCustomAppearanceActivity extends AppCompatActivity {
         progressWrapper.setVisibility(View.VISIBLE);
 
         Mjpeg.newInstance()
-            .open("http://62.176.195.157:80/mjpg/video.mjpg", TIMEOUT)
+            .open("rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov", TIMEOUT)
             .subscribe(
                 inputStream -> {
                     progressWrapper.setVisibility(View.GONE);

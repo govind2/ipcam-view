@@ -7,7 +7,24 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="rtsp://10.147.224.73/axis-media/media.mjpg"
+            android:textColorHint="#4CAF50" />
+    </LinearLayout>
+
+        <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -44,6 +61,12 @@
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
+
+            <Button
+                android:id="@+id/buttonPlayUrl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/button_play_url" />
 
             <Button
                 android:id="@+id/buttonSnapshot"
